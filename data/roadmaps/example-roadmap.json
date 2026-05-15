@@ -1,0 +1,26 @@
+{
+  "title": "Backend Python",
+  "summary": "Roadmap d'exemple pour valider un profil backend Python.",
+  "notions": [
+    {
+      "name": "API Web",
+      "description": "Concevoir et exposer des API HTTP.",
+      "technologies": ["FastAPI", "Django", "Flask"]
+    },
+    {
+      "name": "ORM",
+      "description": "Mapper les objets applicatifs vers une base relationnelle.",
+      "technologies": ["SQLAlchemy", "Django ORM", "Tortoise ORM"]
+    },
+    {
+      "name": "Base de donnees relationnelle",
+      "description": "Savoir concevoir et exploiter une base SQL.",
+      "technologies": ["PostgreSQL", "MySQL", "SQLite"]
+    },
+    {
+      "name": "Tests automatises",
+      "description": "Ecrire et maintenir des tests de non-regression.",
+      "technologies": ["pytest", "unittest"]
+    }
+  ]
+}

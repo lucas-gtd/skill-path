@@ -1,0 +1,51 @@
+{
+  "title": "Full Stack",
+  "summary": "Roadmap pour valider un profil développeur full-stack.",
+  "notions": [
+    {
+      "name": "Bases du Web",
+      "description": "Apprentissage des langages fondamentaux pour la structure et le style.",
+      "technologies": ["HTML", "CSS", "JavaScript"]
+    },
+    {
+      "name": "Gestion de version",
+      "description": "Outils pour le suivi de code et la collaboration.",
+      "technologies": ["Git", "GitHub"]
+    },
+    {
+      "name": "Frontend moderne",
+      "description": "Frameworks et bibliothèques pour des interfaces réactives.",
+      "technologies": ["React", "Tailwind CSS"]
+    },
+    {
+      "name": "Backend",
+      "description": "Environnement d'exécution côté serveur.",
+      "technologies": ["Node.js"]
+    },
+    {
+      "name": "Persistance des données",
+      "description": "Gestion des bases de données relationnelles et du cache.",
+      "technologies": ["PostgreSQL", "Redis"]
+    },
+    {
+      "name": "Architectures API",
+      "description": "Conception d'interfaces de communication et authentification.",
+      "technologies": ["RESTful APIs", "JWT Auth"]
+    },
+    {
+      "name": "Infrastructure Cloud (AWS)",
+      "description": "Services de base pour l'hébergement et le réseau.",
+      "technologies": ["EC2", "S3", "VPC", "Route53", "SES"]
+    },
+    {
+      "name": "Automatisation & IaC",
+      "description": "Gestion de l'infrastructure par le code.",
+      "technologies": ["Terraform", "Ansible"]
+    },
+    {
+      "name": "Cycle de vie & Monitoring",
+      "description": "Automatisation des déploiements et surveillance.",
+      "technologies": ["GitHub Actions", "Monit"]
+    }
+  ]
+}

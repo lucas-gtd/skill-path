@@ -1,0 +1,98 @@
+{
+  "title": "Data Engineer",
+  "summary": "Roadmap pour valider un profil Data engineer.",
+  "notions": [
+    {
+      "name": "Programmation",
+      "description": "Langages principaux utilisés en ingénierie des données.",
+      "technologies": ["Python", "Java", "Scala", "Go"]
+    },
+    {
+      "name": "Bases de données SQL",
+      "description": "Systèmes relationnels pour le stockage structuré.",
+      "technologies": [
+        "MySQL",
+        "PostgreSQL",
+        "MariaDB",
+        "Aurora DB",
+        "Oracle",
+        "MS SQL"
+      ]
+    },
+    {
+      "name": "Stockage NoSQL",
+      "description": "Solutions pour données non structurées ou besoins spécifiques (clé-valeur, graphe).",
+      "technologies": [
+        "MongoDB",
+        "Cassandra",
+        "Neo4j",
+        "Redis",
+        "ElasticSearch",
+        "BigTable",
+        "DynamoDB",
+        "CosmosDB",
+        "HBase",
+        "CouchDB"
+      ]
+    },
+    {
+      "name": "Entreposage de données",
+      "description": "Plateformes d'analyse et de stockage massif.",
+      "technologies": [
+        "Google BigQuery",
+        "Snowflake",
+        "Amazon Redshift",
+        "Databricks Delta Lake"
+      ]
+    },
+    {
+      "name": "Orchestration & ETL",
+      "description": "Outils de création et gestion de pipelines de données.",
+      "technologies": ["Apache Airflow", "dbt", "Luigi", "Prefect"]
+    },
+    {
+      "name": "Ecosystème Big Data",
+      "description": "Calcul distribué et systèmes de fichiers.",
+      "technologies": ["Apache Spark", "HDFS", "YARN", "MapReduce"]
+    },
+    {
+      "name": "Flux de messages",
+      "description": "Gestion des données en temps réel.",
+      "technologies": ["Apache Kafka", "RabbitMQ", "AWS SQS", "AWS SNS"]
+    },
+    {
+      "name": "Conteneurisation",
+      "description": "Isolation et déploiement d'applications.",
+      "technologies": ["Docker", "Kubernetes", "Google Cloud GKE", "AWS EKS"]
+    },
+    {
+      "name": "Infrastructure as Code",
+      "description": "Provisionnement automatisé des ressources.",
+      "technologies": [
+        "Terraform",
+        "OpenTofu",
+        "AWS CDK",
+        "Google Deployment Mgr"
+      ]
+    },
+    {
+      "name": "Observabilité & CI/CD",
+      "description": "Suivi des performances et intégration continue.",
+      "technologies": [
+        "GitHub Actions",
+        "GitLab CI",
+        "Circle CI",
+        "ArgoCD",
+        "Prometheus",
+        "Datadog",
+        "New Relic",
+        "Sentry"
+      ]
+    },
+    {
+      "name": "Visualisation (BI)",
+      "description": "Outils d'aide à la décision et restitution de données.",
+      "technologies": ["Microsoft Power BI", "Streamlit", "Tableau", "Looker"]
+    }
+  ]
+}
