@@ -1,6 +1,16 @@
 {
   "title": "Backend Python",
   "summary": "Roadmap d'exemple pour valider un profil backend Python.",
+  "skill_implications": {
+    "FastAPI": ["Python"],
+    "Django": ["Python"],
+    "Flask": ["Python"],
+    "SQLAlchemy": ["Python"],
+    "Django ORM": ["Python", "Django"],
+    "Tortoise ORM": ["Python"],
+    "pytest": ["Python"],
+    "unittest": ["Python"]
+  },
   "notions": [
     {
       "name": "API Web",

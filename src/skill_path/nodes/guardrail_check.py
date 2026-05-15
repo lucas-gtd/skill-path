@@ -26,6 +26,8 @@ def build_guardrail_check_node(settings: Settings) -> Callable[[EvaluationState]
                         "missing_notions": state["missing_notions"],
                         "match_results": state["match_results"],
                         "extracted_skills": state["extracted_skills"],
+                        "inferred_skills": state.get("inferred_skills", []),
+                        "inferred_skill_paths": state.get("inferred_skill_paths", {}),
                         "extracted_experiences": state.get("extracted_experiences", []),
                     }
                 ),

@@ -13,7 +13,11 @@ class NotionEvaluation(TypedDict):
     notion: str
     expected_technologies: list[str]
     matched_skills: list[str]
+    matched_skills_explicit: list[str]
+    matched_skills_inferred: list[str]
+    inferred_skill_paths: dict[str, list[str]]
     matched: bool
+    matched_by_inference: bool
 
 
 class EvaluationState(TypedDict, total=False):
@@ -23,6 +27,8 @@ class EvaluationState(TypedDict, total=False):
     cv_chunks: list[str]
     roadmap_json: dict[str, Any]
     extracted_skills: list[str]
+    inferred_skills: list[str]
+    inferred_skill_paths: dict[str, list[str]]
     extracted_experiences: list[ExtractedExperience]
     matched_notions: list[str]
     missing_notions: list[str]

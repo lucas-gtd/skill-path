@@ -76,12 +76,18 @@ skill-path data\cv\mon-cv.pdf data\roadmaps\ma-roadmap.json `
 
 ## Format attendu pour une roadmap
 
-Chaque notion expose un nom et une liste de technologies equivalentes. Une seule techno retrouvee dans le CV suffit pour valider la notion.
+Chaque notion expose un nom et une liste de technologies equivalentes. Une seule techno retrouvee dans le CV suffit pour valider la notion. Tu peux aussi declarer des **competences implicites** avec `skill_implications` pour couvrir les cas ou un framework implique logiquement un langage ou une techno sous-jacente.
 
 ```json
 {
   "title": "Backend Python",
   "summary": "Roadmap d'evaluation backend orientee Python.",
+  "skill_implications": {
+    "FastAPI": ["Python"],
+    "Django": ["Python"],
+    "Flask": ["Python"],
+    "SQLAlchemy": ["Python"]
+  },
   "notions": [
     {
       "name": "API Web",
@@ -97,6 +103,8 @@ Chaque notion expose un nom et une liste de technologies equivalentes. Une seule
 ```
 
 Un exemple complet est disponible dans `data\roadmaps\example-roadmap.json`.
+
+Exemple: si le CV mentionne `Node.js` et que la roadmap contient `"Node.js": ["JavaScript"]`, alors une notion qui attend `JavaScript` pourra etre validee par inference. Le rapport doit toutefois presenter ce point comme une deduction de la roadmap, pas comme une mention explicite du CV.
 
 ## Variables d'environnement
 

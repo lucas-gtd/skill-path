@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 from typing import Literal
+from typing import Any, Literal
 
 from pydantic import BaseModel, Field
 
@@ -14,6 +15,7 @@ class RoadmapNotionModel(BaseModel):
 class RoadmapModel(BaseModel):
     title: str
     summary: str | None = None
+    skill_implications: dict[str, list[str]] = Field(default_factory=dict)
     notions: list[RoadmapNotionModel] = Field(default_factory=list, min_length=1)
 
 
@@ -38,7 +40,10 @@ class EvaluationResultModel(BaseModel):
     matched_notions: list[str]
     missing_notions: list[str]
     extracted_skills: list[str]
+    inferred_skills: list[str] = Field(default_factory=list)
+    inferred_skill_paths: dict[str, list[str]] = Field(default_factory=dict)
     extracted_experiences: list[ExtractedExperienceModel]
+    match_results: list[dict[str, Any]] = Field(default_factory=list)
     draft_report: str
     guardrail_status: str
     guardrail_feedback: str = ""

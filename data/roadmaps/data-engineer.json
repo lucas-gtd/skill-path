@@ -1,6 +1,18 @@
 {
   "title": "Data Engineer",
   "summary": "Roadmap pour valider un profil Data engineer.",
+  "skill_implications": {
+    "Apache Spark": ["Python", "Scala", "Java"],
+    "PySpark": ["Python", "Apache Spark"],
+    "Apache Airflow": ["Python"],
+    "Luigi": ["Python"],
+    "Prefect": ["Python"],
+    "dbt": ["SQL"],
+    "Databricks Delta Lake": ["Apache Spark"],
+    "Streamlit": ["Python"],
+    "Google Cloud GKE": ["Kubernetes"],
+    "AWS EKS": ["Kubernetes"]
+  },
   "notions": [
     {
       "name": "Programmation",

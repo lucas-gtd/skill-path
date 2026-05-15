@@ -1,6 +1,17 @@
 {
   "title": "Full Stack",
   "summary": "Roadmap pour valider un profil développeur full-stack.",
+  "skill_implications": {
+    "Node": ["JavaScript"],
+    "Node.js": ["JavaScript"],
+    "React": ["JavaScript", "HTML", "CSS"],
+    "Angular": ["TypeScript", "JavaScript", "HTML", "CSS"],
+    "Vue": ["JavaScript", "HTML", "CSS"],
+    "Tailwind CSS": ["CSS", "HTML"],
+    "PostgreSQL": ["SQL"],
+    "Redis": ["NoSQL"],
+    "GitHub Actions": ["Git"]
+  },
   "notions": [
     {
       "name": "Bases du Web",

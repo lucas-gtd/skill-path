@@ -9,6 +9,9 @@ def test_load_roadmap_validates_json(tmp_path: Path) -> None:
         """
         {
           "title": "Backend Python",
+          "skill_implications": {
+            "FastAPI": ["Python"]
+          },
           "notions": [
             {
               "name": "API Web",
@@ -23,4 +26,13 @@ def test_load_roadmap_validates_json(tmp_path: Path) -> None:
     roadmap = load_roadmap(roadmap_path)
 
     assert roadmap.title == "Backend Python"
+    assert roadmap.skill_implications == {"FastAPI": ["Python"]}
     assert roadmap.notions[0].name == "API Web"
+
+
+def test_all_repository_roadmaps_are_valid() -> None:
+    roadmap_dir = Path("data") / "roadmaps"
+
+    loaded_titles = [load_roadmap(path).title for path in roadmap_dir.glob("*.json")]
+
+    assert sorted(loaded_titles) == ["Backend Python", "Data Engineer", "Full Stack"]

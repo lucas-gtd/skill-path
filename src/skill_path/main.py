@@ -53,6 +53,8 @@ def build_initial_state(cv_path: Path, roadmap_path: Path, settings: Settings) -
         "cv_chunks": cv_chunks,
         "roadmap_json": {},
         "extracted_skills": [],
+        "inferred_skills": [],
+        "inferred_skill_paths": {},
         "extracted_experiences": [],
         "matched_notions": [],
         "missing_notions": [],
@@ -72,9 +74,12 @@ def export_state(final_state: dict[str, Any], output_path: Path) -> None:
         matched_notions=final_state["matched_notions"],
         missing_notions=final_state["missing_notions"],
         extracted_skills=final_state["extracted_skills"],
+        inferred_skills=final_state.get("inferred_skills", []),
+        inferred_skill_paths=final_state.get("inferred_skill_paths", {}),
         extracted_experiences=[
             ExtractedExperienceModel.model_validate(item) for item in final_state.get("extracted_experiences", [])
         ],
+        match_results=final_state.get("match_results", []),
         draft_report=final_state["draft_report"],
         guardrail_status=final_state["guardrail_status"],
         guardrail_feedback=final_state.get("guardrail_feedback", ""),

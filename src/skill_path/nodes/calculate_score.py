@@ -9,6 +9,9 @@ def calculate_score_node(state: EvaluationState) -> dict[str, object]:
     roadmap = roadmap_from_dict(state["roadmap_json"])
     result = calculate_score(state.get("extracted_skills", []), roadmap)
     return {
+        "extracted_skills": result.explicit_skills,
+        "inferred_skills": result.inferred_skills,
+        "inferred_skill_paths": result.inferred_skill_paths,
         "matched_notions": result.matched_notions,
         "missing_notions": result.missing_notions,
         "score": result.score,

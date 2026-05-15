@@ -38,9 +38,11 @@ def build_draft_prompt() -> ChatPromptTemplate:
                 (
                     "Tu rediges un compte rendu d'evaluation de CV en francais. "
                     "Tu dois rester strictement coherent avec les donnees fournies. "
-                    "Tu ne peux citer que des competences presentes dans extracted_skills, "
+                    "Tu ne peux citer que des competences presentes dans extracted_skills, inferred_skills, "
                     "matched_notions, missing_notions, match_results ou extracted_experiences. "
-                    "Le score est la source de verite."
+                    "Le score est la source de verite. "
+                    "Les competences inferees doivent toujours etre presentees comme des deductions de la roadmap, "
+                    "jamais comme des mentions explicites du CV."
                 ),
             ),
             (
@@ -53,6 +55,7 @@ def build_draft_prompt() -> ChatPromptTemplate:
                     "- Indique le score numerique.\n"
                     "- Separe les notions validees et les notions a travailler.\n"
                     "- Utilise les experiences extraites uniquement comme preuves contextuelles.\n"
+                    "- Si une notion est validee grace a une competence inferee, indique-le explicitement.\n"
                     "- Si un feedback guardrail est present, corrige explicitement les problemes.\n\n"
                     "Feedback guardrail precedent:\n{guardrail_feedback}"
                 ),
@@ -81,6 +84,7 @@ def build_guardrail_prompt() -> ChatPromptTemplate:
                     "- score ou conclusion incoherents\n"
                     "- competence ou notion inventee\n"
                     "- notion marquee comme acquise alors qu'elle est absente de matched_notions\n"
+                    "- competence inferee presentee comme si elle etait explicitement ecrite dans le CV\n"
                     "- omission flagrante d'une incoherence deja signalee"
                 ),
             ),
