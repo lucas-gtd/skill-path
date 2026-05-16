@@ -1,8 +1,11 @@
 from __future__ import annotations
 
+from collections.abc import Callable
+
 from langgraph.graph import END, START, StateGraph
 
 from skill_path.config import Settings
+from skill_path.services.progress import ProgressReporter
 from skill_path.state import EvaluationState
 
 
@@ -15,7 +18,24 @@ def route_after_guardrail(state: EvaluationState) -> str:
     return "fail"
 
 
-def build_graph(settings: Settings):
+def _wrap_node(
+    node_name: str,
+    node: Callable[[EvaluationState], dict[str, object]],
+    reporter: ProgressReporter | None,
+) -> Callable[[EvaluationState], dict[str, object]]:
+    if reporter is None:
+        return node
+
+    def wrapped_node(state: EvaluationState) -> dict[str, object]:
+        reporter.on_node_start(node_name, state)
+        update = node(state)
+        reporter.on_node_end(node_name, update)
+        return update
+
+    return wrapped_node
+
+
+def build_graph(settings: Settings, reporter: ProgressReporter | None = None):
     from skill_path.nodes.calculate_score import calculate_score_node
     from skill_path.nodes.draft_evaluation import build_draft_evaluation_node
     from skill_path.nodes.extract_cv_skills import build_extract_cv_skills_node
@@ -24,11 +44,20 @@ def build_graph(settings: Settings):
 
     builder = StateGraph(EvaluationState)
 
-    builder.add_node("extract_cv_skills", build_extract_cv_skills_node(settings))
-    builder.add_node("load_roadmap_data", load_roadmap_data)
-    builder.add_node("calculate_score", calculate_score_node)
-    builder.add_node("draft_evaluation", build_draft_evaluation_node(settings))
-    builder.add_node("guardrail_check", build_guardrail_check_node(settings))
+    builder.add_node(
+        "extract_cv_skills",
+        _wrap_node("extract_cv_skills", build_extract_cv_skills_node(settings), reporter),
+    )
+    builder.add_node("load_roadmap_data", _wrap_node("load_roadmap_data", load_roadmap_data, reporter))
+    builder.add_node("calculate_score", _wrap_node("calculate_score", calculate_score_node, reporter))
+    builder.add_node(
+        "draft_evaluation",
+        _wrap_node("draft_evaluation", build_draft_evaluation_node(settings), reporter),
+    )
+    builder.add_node(
+        "guardrail_check",
+        _wrap_node("guardrail_check", build_guardrail_check_node(settings), reporter),
+    )
 
     builder.add_edge(START, "extract_cv_skills")
     builder.add_edge(START, "load_roadmap_data")

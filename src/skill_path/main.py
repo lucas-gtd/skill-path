@@ -2,14 +2,16 @@ from __future__ import annotations
 
 import argparse
 import json
+from collections.abc import Sequence
 from pathlib import Path
 from typing import Any
 
 from skill_path.config import Settings
 from skill_path.schemas import EvaluationResultModel, ExtractedExperienceModel
+from skill_path.services.progress import ConsoleProgressReporter, ProgressReporter
 
 
-def parse_args() -> argparse.Namespace:
+def parse_args(argv: Sequence[str] | None = None) -> argparse.Namespace:
     parser = argparse.ArgumentParser(
         description="Evaluate a CV PDF against a roadmap JSON using LangChain, OpenRouter and LangGraph."
     )
@@ -33,19 +35,44 @@ def parse_args() -> argparse.Namespace:
         default=None,
         help="Optional path where the final state snapshot will be written as JSON.",
     )
-    return parser.parse_args()
+    return parser.parse_args(argv)
 
 
-def build_initial_state(cv_path: Path, roadmap_path: Path, settings: Settings) -> dict[str, Any]:
-    from skill_path.services.pdf_loader import load_pdf_text
-    from skill_path.services.retriever import split_cv_text
+def build_initial_state(
+    cv_path: Path,
+    roadmap_path: Path,
+    settings: Settings,
+    reporter: ProgressReporter | None = None,
+    *,
+    load_pdf_text_fn: Any | None = None,
+    split_cv_text_fn: Any | None = None,
+) -> dict[str, Any]:
+    if load_pdf_text_fn is None:
+        from skill_path.services.pdf_loader import load_pdf_text
 
-    cv_text = load_pdf_text(cv_path)
-    cv_chunks = split_cv_text(
+        pdf_loader = load_pdf_text
+    else:
+        pdf_loader = load_pdf_text_fn
+
+    if split_cv_text_fn is None:
+        from skill_path.services.retriever import split_cv_text
+
+        chunk_splitter = split_cv_text
+    else:
+        chunk_splitter = split_cv_text_fn
+
+    if reporter is not None:
+        reporter.on_cv_load_start()
+    cv_text = pdf_loader(cv_path)
+    if reporter is not None:
+        reporter.on_cv_chunking_start()
+    cv_chunks = chunk_splitter(
         cv_text,
         chunk_size=settings.rag_chunk_size,
         chunk_overlap=settings.rag_chunk_overlap,
     )
+    if reporter is not None:
+        reporter.on_cv_ready(len(cv_chunks))
     return {
         "cv_path": str(cv_path),
         "roadmap_path": str(roadmap_path),
@@ -87,15 +114,16 @@ def export_state(final_state: dict[str, Any], output_path: Path) -> None:
     output_path.write_text(json.dumps(payload, indent=2, ensure_ascii=False), encoding="utf-8")
 
 
-def main() -> int:
-    args = parse_args()
+def main(argv: Sequence[str] | None = None) -> int:
+    args = parse_args(argv)
     from skill_path.graph import build_graph
 
     settings = Settings.from_env(args.env_file)
-    graph = build_graph(settings)
+    reporter = ConsoleProgressReporter(max_guardrail_revisions=settings.guardrail_max_revisions)
+    graph = build_graph(settings, reporter=reporter)
 
     final_state = graph.invoke(
-        build_initial_state(args.cv_pdf.resolve(), args.roadmap_json.resolve(), settings),
+        build_initial_state(args.cv_pdf.resolve(), args.roadmap_json.resolve(), settings, reporter=reporter),
         config={"recursion_limit": 25},
     )
     report = final_state["draft_report"]

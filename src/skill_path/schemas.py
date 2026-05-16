@@ -27,6 +27,7 @@ class ExtractedExperienceModel(BaseModel):
 
 class CVExtractionResultModel(BaseModel):
     skills: list[str] = Field(default_factory=list)
+    experience_implied_skills: list[str] = Field(default_factory=list)
     experiences: list[ExtractedExperienceModel] = Field(default_factory=list)
 
 
@@ -40,6 +41,7 @@ class EvaluationResultModel(BaseModel):
     matched_notions: list[str]
     missing_notions: list[str]
     extracted_skills: list[str]
+    experience_implied_skills: list[str] = Field(default_factory=list)
     inferred_skills: list[str] = Field(default_factory=list)
     inferred_skill_paths: dict[str, list[str]] = Field(default_factory=dict)
     extracted_experiences: list[ExtractedExperienceModel]

@@ -27,6 +27,7 @@ class EvaluationState(TypedDict, total=False):
     cv_chunks: list[str]
     roadmap_json: dict[str, Any]
     extracted_skills: list[str]
+    experience_implied_skills: list[str]
     inferred_skills: list[str]
     inferred_skill_paths: dict[str, list[str]]
     extracted_experiences: list[ExtractedExperience]

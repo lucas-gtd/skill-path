@@ -34,6 +34,7 @@ def build_extract_cv_skills_node(settings: Settings) -> Callable[[EvaluationStat
         )
         return {
             "extracted_skills": deduplicate_strings(result.skills),
+            "experience_implied_skills": deduplicate_strings(result.experience_implied_skills),
             "extracted_experiences": [
                 {
                     "title": experience.title.strip(),

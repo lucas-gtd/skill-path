@@ -5,6 +5,7 @@ Application Python modulaire pour evaluer un CV PDF contre une roadmap JSON avec
 ## Fonctionnalites
 
 - Chargement d'un CV PDF depose dans le projet.
+- Affichage en temps reel des etapes du pipeline dans la console CLI.
 - Pipeline RAG local sur le CV avec chunking + retrieval BM25.
 - Graphe LangGraph conforme au flux demande:
   - `extract_cv_skills`
@@ -74,6 +75,19 @@ skill-path data\cv\mon-cv.pdf data\roadmaps\ma-roadmap.json `
   --state-output evaluation-state.json
 ```
 
+Pendant l'execution, la console affiche les etapes metier en direct, par exemple:
+
+```text
+[skill-path] Chargement du CV PDF...
+[skill-path] Decoupage du CV pour l'analyse...
+[skill-path] Extraction des competences et experiences du CV...
+[skill-path] Calcul du score de correspondance...
+[skill-path] Redaction du rapport...
+[skill-path] Verification finale du rapport...
+```
+
+Ces messages de progression sont envoyes sur la sortie d'erreur standard pour ne pas melanger la progression avec le rapport final imprime sur la sortie standard.
+
 ## Format attendu pour une roadmap
 
 Chaque notion expose un nom et une liste de technologies equivalentes. Une seule techno retrouvee dans le CV suffit pour valider la notion. Tu peux aussi declarer des **competences implicites** avec `skill_implications` pour couvrir les cas ou un framework implique logiquement un langage ou une techno sous-jacente.
@@ -108,17 +122,17 @@ Exemple: si le CV mentionne `Node.js` et que la roadmap contient `"Node.js": ["J
 
 ## Variables d'environnement
 
-| Variable | Description | Defaut |
-| --- | --- | --- |
-| `OPENROUTER_API_KEY` | Cle API OpenRouter | Obligatoire |
-| `OPENROUTER_MODEL` | Modele chat utilise pour extraction, rapport et guardrail | Obligatoire |
-| `OPENROUTER_BASE_URL` | Base URL OpenRouter | `https://openrouter.ai/api/v1` |
-| `OPENROUTER_SITE_URL` | URL envoyee dans les headers OpenRouter | `https://github.com/lucas-gtd/skill-path` |
-| `OPENROUTER_APP_NAME` | Nom applicatif envoye dans les headers | `skill-path` |
-| `SKILL_PATH_RAG_CHUNK_SIZE` | Taille des chunks du CV | `900` |
-| `SKILL_PATH_RAG_CHUNK_OVERLAP` | Overlap entre chunks | `120` |
-| `SKILL_PATH_RAG_TOP_K` | Nombre de chunks recuperes par requete | `6` |
-| `SKILL_PATH_GUARDRAIL_MAX_REVISIONS` | Nombre max de revisions avant echec dur | `3` |
+| Variable                             | Description                                               | Defaut                                    |
+| ------------------------------------ | --------------------------------------------------------- | ----------------------------------------- |
+| `OPENROUTER_API_KEY`                 | Cle API OpenRouter                                        | Obligatoire                               |
+| `OPENROUTER_MODEL`                   | Modele chat utilise pour extraction, rapport et guardrail | Obligatoire                               |
+| `OPENROUTER_BASE_URL`                | Base URL OpenRouter                                       | `https://openrouter.ai/api/v1`            |
+| `OPENROUTER_SITE_URL`                | URL envoyee dans les headers OpenRouter                   | `https://github.com/lucas-gtd/skill-path` |
+| `OPENROUTER_APP_NAME`                | Nom applicatif envoye dans les headers                    | `skill-path`                              |
+| `SKILL_PATH_RAG_CHUNK_SIZE`          | Taille des chunks du CV                                   | `900`                                     |
+| `SKILL_PATH_RAG_CHUNK_OVERLAP`       | Overlap entre chunks                                      | `120`                                     |
+| `SKILL_PATH_RAG_TOP_K`               | Nombre de chunks recuperes par requete                    | `6`                                       |
+| `SKILL_PATH_GUARDRAIL_MAX_REVISIONS` | Nombre max de revisions avant echec dur                   | `3`                                       |
 
 ## Flux LangGraph
 
